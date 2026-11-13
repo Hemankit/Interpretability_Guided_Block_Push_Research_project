@@ -1,0 +1,50 @@
+# PushScope M2: mechanisms for reproducible visual nuisance generation only.
+# No training/validation/OOD split logic, policy, or dynamics randomization.
+version: 1
+
+# Baseline values are independent of the world current visual state.
+# Values are RGB integers in [0, 255]; the appearance module converts to
+# normalized RGBA for PyBullet. The floor may still have a URDF texture:
+# confirm its actual appearance in the visual smoke test.
+baseline:
+  appearance:
+    block_color: [51, 102, 255]
+    floor_color: [255, 255, 255]
+
+nuisances:
+  appearance:
+    enabled: true
+    block_colors:
+      - [51, 102, 255]
+      - [230, 140, 65]
+      - [170, 92, 190]
+    floor_colors:
+      - [205, 205, 205]
+      - [175, 190, 180]
+      - [215, 195, 170]
+
+  # Lighting and distractors are inert unless enabled. When lighting is
+  # disabled the renderer's default light (DEFAULT_LIGHTING) is used.
+  lighting:
+    enabled: false
+    directions:
+      - [1.0, 1.0, 1.0]
+      - [-1.0, 0.5, 1.0]
+      - [0.0, -1.0, 0.5]
+    ambient_coefficients: [0.2, 0.4, 0.8]
+    diffuse_coefficients: [0.3, 0.6, 1.0]
+  distractors:
+    enabled: false
+    counts: [2, 3]
+    candidate_positions:
+      - [0.3, 0.4]
+      - [1.4, 1.7]
+      - [0.9, 0.4]
+      - [1.5, 0.5]
+      - [0.2, 1.7]
+    colors:
+      - [255, 0, 255]
+      - [255, 220, 0]
+      - [0, 200, 200]
+    sizes: [0.15, 0.25]
+
